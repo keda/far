@@ -14,7 +14,7 @@
 </head>
 <body>
 <h1>Welcome</h1>
-<form action="/home" method="post">
+<form action="toHome" method="post">
 	<input type="text" name="username" value="">
 	<input type="submit" value="提交">
 </form>
