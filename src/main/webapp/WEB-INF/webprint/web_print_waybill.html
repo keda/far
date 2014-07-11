@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 101 Template</title>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="printcss.css" media="print">
+	<style>
+		
+		div.print-item {
+			z-index: 1000;
+			position: absolute;
+			background-color: antiquewhite;
+			border: 1px solid #CCC;
+		}
+		
+	</style>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <h1></h1>
+	<img id="img_waybill" src="yto.jpg" style="display:none;"></img>
+	<div class=container>
+		<div class=row>
+			<div class="col-md-3">
+				
+				<div id="exampleInputEmail1" class="print-item"><label>Email address</label></div>
+				
+				<div id="phoneNumber" class="print-item"><label>Phone number</label></div>
+				
+			</div>
+			<div class="col-md-9">
+				<div id="waybill_pic"></div>
+			</div>
+		</div>
+		<div class="row noprint"><button onclick=getPositionInfo()>获取打印信息</button></div>
+	</div>
+	
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="jquery-1.7.1.js"></script>
+	<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	
+	</body>
+	<script>
+		$(document).ready(function(){
+			//初始化打印模板图片
+			var $imgWayBill = $("#img_waybill");
+			var pic_height = $imgWayBill.height();
+			var pic_width = $imgWayBill.width();
+			var waybill_src = $imgWayBill.attr("src");
+			
+			console.log('waybill_src='+waybill_src+', width='+pic_width+',height='+pic_height);
+			
+			$("#waybill_pic").css({
+				"background-image":'url('+waybill_src+')',
+				"width":pic_width,
+				"height":pic_height
+			});
+			
+			$( "#exampleInputEmail1" ).resizable().draggable(dragEvent);
+			$( "#phoneNumber" ).resizable().draggable(dragEvent);
+			
+		});
+		
+		var line = {};
+		function getPositionInfo() {
+			var $template = $("#waybill_pic");
+			var $template_offset = $template.offset();
+			//alert('left:'+$template.offset().left+',top:'+$template.offset().top+',width:'+$template.width());
+			
+			var $phoneNumber = $("#phoneNumber");
+			var $phoneNumber_offset = $phoneNumber.offset();
+			
+			line.p1 = {};
+			line.p1.x = $template_offset.left;
+			line.p1.y = $phoneNumber_offset.top;
+			line.p1.width = $phoneNumber_offset.left - line.p1.x;
+			
+			line.p2 = {};
+			line.p2.x = $phoneNumber_offset.left;
+			line.p2.y = $template_offset.top;
+			line.p2.height = $phoneNumber_offset.top - line.p2.y;
+			//alert('p1.x:'+line.p1.x+',p1.y:'+line.p1.y+',p1.width:'+line.p1.width);
+			$("div.liner").remove();
+			$("<div class='liner x noprint'/>").css({
+				position: 'absolute',
+				left: line.p1.x,
+				top: line.p1.y,
+				width: line.p1.width,
+				border: '0.5px dotted red'
+			}).appendTo("body");
+			$("<div class='liner y noprint'/>").css({
+				position: 'absolute',
+				left: line.p2.x,
+				top: line.p2.y,
+				height: line.p2.height,
+				border: '0.5px dotted red'
+			}).appendTo("body");
+			
+			//window.print();
+		}
+		
+		var dragEvent = {
+			cursor: "move",
+			drag: function(){
+				var $this = $(this).offset();
+				var $linerx = $("div.x");
+				var $linery = $("div.y");
+				if($linerx){
+					$linerx.css({
+						top: $this.top,
+						width: $this.left - $("#waybill_pic").offset().left
+					});
+					
+					$linery.css({
+						left: $this.left,
+						height: $this.top - $("#waybill_pic").offset().top
+					});
+				}
+			}
+		}
+	</script>
+</html>
