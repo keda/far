@@ -12,6 +12,7 @@ import com.sky.core.AppMessage;
 @Import({CoreConfig.class, DatabaseConfig.class, PersistenceConfig.class})
 public class AppConfig {
 	
+	@Bean
 	public MessageSource messageSource() {
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		

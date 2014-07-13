@@ -6,6 +6,7 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.mybatis.spring.SqlSessionFactoryBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,22 @@ public class DatabaseConfig implements TransactionManagementConfigurer{
 	@Override
 	public PlatformTransactionManager annotationDrivenTransactionManager() {
 		return txManager();
+	}
+	
+	@Bean
+	public SqlSessionFactoryBean sqlSessionFactory() {
+		
+		SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
+		
+		sqlSessionFactory.setDataSource(dataSource());
+		try {
+			sqlSessionFactory.setMapperLocations(appCtx.getResources("classpath*:config/mappers/**/*.xml"));
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		
+		return sqlSessionFactory;
+		
 	}
 	
 }

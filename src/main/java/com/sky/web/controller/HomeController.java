@@ -1,5 +1,7 @@
 package com.sky.web.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -15,17 +17,30 @@ public class HomeController {
 	private Logger LOG = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping(value="/toHome", method=RequestMethod.POST)
-	public String home(@ModelAttribute() User user, Model model) {
+	public String home(HttpSession session, @ModelAttribute() User user, Model model) {
 		LOG.debug(user.getUsername() + " in controller toHome...");
-		
+		session.setAttribute("username", user.getUsername());
 		return "redirect:/home/"+user.getUsername();
 	}
 	
 	@RequestMapping(value="/home/{username}", method=RequestMethod.GET)
-	public String home(@PathVariable("username") String name, Model model) {
+	public String home(@PathVariable("username") String name, Model model, HttpSession session) {
 		LOG.debug(name + " in controller home...");
+		
+		LOG.debug(">>>>>>>>>>>" + session.getAttribute("username"));
+		
 		model.addAttribute("username", name);
 		return "home";
+	}
+	
+	@RequestMapping(value="/home/{username}/overview", method=RequestMethod.GET)
+	public String overview(@PathVariable("username") String name, Model model, HttpSession session) {
+		LOG.debug(name + " in controller home...");
+		
+		LOG.debug(">>>>>>>>>>>" + session.getAttribute("username"));
+		
+		model.addAttribute("username", name);
+		return "setprinttemplate :: #home";
 	}
 	
 }
