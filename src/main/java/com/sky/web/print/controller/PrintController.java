@@ -19,7 +19,7 @@ public class PrintController {
 		System.out.println("<<<<<<<<<<<<<<"+ session.getAttribute("username"));
 //		model.addAttribute("expList", expList());
 		
-		return "setprinttemplate :: setprint";
+		return "setprinttemplate";
 	}
 	
 	@ModelAttribute("expList")

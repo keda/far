@@ -33,16 +33,6 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping(value="/home/{username}/overview", method=RequestMethod.GET)
-	public String overview(@PathVariable("username") String name, Model model, HttpSession session) {
-		LOG.debug(name + " in controller home...");
-		
-		LOG.debug(">>>>>>>>>>>" + session.getAttribute("username"));
-		
-		model.addAttribute("username", name);
-		return "setprinttemplate :: #home";
-	}
-	
 }
 
 class User {
