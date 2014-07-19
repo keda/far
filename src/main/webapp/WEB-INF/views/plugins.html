@@ -38,7 +38,7 @@
 					<li><a href="#">Help</a></li>
 				</ul>
 				<form class="navbar-form navbar-right">
-					<input type="text" class="form-control" placeholder="Search..." />
+					<input type="text" class="form-control" placeholder="Search..." ng-model="query"/>
 				</form>
 			</div>
 		</div>
@@ -47,9 +47,9 @@
 	<!-- navbar sidebar -->
 	<div class="col-sm-3 col-md-2 sidebar" th:fragment="sidebar" id="_sidebar" style="background-color:#222;">
 		<ul class="nav nav-sidebar">
-			<li class="active"><a href="javascript:void(0);" th:href="@{/home/{username}(username=${session.username})}" onfocus="this.blur();">Overview</a></li>
-			<li><a href="javascript:void(0);" th:href="@{/print}" onfocus="this.blur();">设置打印模板</a></li>
-			<li><a href="javascript:void(0);" onfocus="this.blur();">Analytics</a></li>
+			<li><a href="javascript:void(0);" th:href="@{/home/{username}(username=${session.username})}" onfocus="this.blur();">Overview</a></li>
+			<li><a href="javascript:void(0);" th:href="@{#/printtmp}" onfocus="this.blur();">设置打印模板</a></li>
+			<li><a href="javascript:void(0);" th:href="@{/phones}" onfocus="this.blur();">Analytics</a></li>
 			<li><a href="javascript:void(0);" onfocus="this.blur();">Export</a></li>
 		</ul>
 		<ul class="nav nav-sidebar">

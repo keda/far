@@ -1,49 +1,9 @@
-<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
-<html lang="zh-cn" xmlns="http://www.w3.org/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Bootstrap 101 Template</title>
-
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="base.css" th:href="@{/resources/css/base.css}" />
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    
-    <!-- navbar-header -->
-	<div th:replace="plugins :: navbar-header"></div>
-
-	<div class="container-fluid">
-		<div class="row">
-			
-			<div th:replace="plugins :: sidebar"></div>
-			
-			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				 <div class="form-group">
-					 <div class="input-group">
-					 <div class="input-group-addon">选择快递公司: </div>
-					 <select id="expcomp" name="expcomp" class="form-control">
-				    	<option th:each="exp : ${expList}" th:value="${exp.key}" th:text="${exp.value}"></option>
-				     </select>
-				     </div>
-				 </div>
-			</div>
-			
-		</div>
-	</div>
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="jquery.min.js" th:src="@{/resources/common/jquery-1.7.1.js}"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="http://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-  </body>
-</html>
+<meta charset="utf-8" />
+<div class="form-group">
+ <div class="input-group">
+ <div class="input-group-addon">选择快递公司: </div>
+ <select id="expcomp" name="expcomp" class="form-control">
+   	<option ng-repeat="expcomp in expcomps" value="{{expcomp.compId}}">{{expcomp.compName}}</option>
+ </select>
+ </div>
+</div>

@@ -1,0 +1,19 @@
+<!-- 请在此处写业务 -->
+<div class="row">
+	<div class="col-md-2">
+		<p>Search: <label>{{query}}</label></p>
+		<p>Sort by: <select ng-model="orderProp">
+			<option value="name">Alphabetical</option>
+			<option value="age">Newest</option>
+		</select></p>
+	</div>
+	<div class="col-md-10">
+		<ul>
+			<li ng-repeat="phone in phones | filter:query | orderBy:orderProp">
+			<a ng-href="#/phones/{{phone.id}}">{{phone.id}}</a>
+			<p>{{phone.name}}</p>
+			<p>{{phone.snippet}}</p>
+			</li>
+		</ul>
+	</div>
+</div>

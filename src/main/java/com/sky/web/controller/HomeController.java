@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,14 @@ public class HomeController {
 		
 		model.addAttribute("username", name);
 		return "home";
+	}
+	
+	@RequestMapping("/home/views/{tmpname}")
+	public String phones(@PathVariable String tmpname) {
+		
+		String value = StringUtils.stripFilenameExtension(tmpname);
+		
+		return value;
 	}
 	
 }

@@ -1,14 +1,14 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring3-3.dtd">
 <html lang="zh-cn" xmlns="http://www.w3.org/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+	xmlns:th="http://www.thymeleaf.org" ng-app='phonecatApp'>
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title th:text="#{appname}">...</title>
+<title th:text="#{appname}">{{query}}</title>
 
 <!-- Bootstrap -->
-<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+<link rel="stylesheet" href="http://localhost:8080/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet" href="base.css" th:href="@{/resources/css/base.css}" />
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -18,7 +18,7 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body>
+<body ng-controller="AppCtrl">
 	<!-- navbar-header -->
 	<div th:replace="plugins :: navbar-header"></div>
 
@@ -28,42 +28,9 @@
 			<div th:replace="plugins :: sidebar"></div>
 			
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id="biz_container">
-				<!-- 请在此处写业务 -->
-				<iframe></iframe>
-				<!-- 
-				<h1 class="page-header">Dashboard</h1>
-
-				<h2 class="sub-header">Section title</h2>
-				<div class="table-responsive">
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>Header</th>
-								<th>Header</th>
-								<th>Header</th>
-								<th>Header</th>
-							</tr>
-						</thead>
-						<tbody th:remove="all-but-first">
-							<tr th:each="trade : ${trades}">
-								<td th:text="${trade.tid}">1,001</td>
-								<td th:text="${trade.buyernick}">Lorem</td>
-								<td th:text="${trade.title}">ipsum</td>
-								<td th:text="${trade.created}">dolor</td>
-								<td th:text="${trade.payment}">sit</td>
-							</tr>
-							<tr>
-								<td>1,002</td>
-								<td>amet</td>
-								<td>consectetur</td>
-								<td>adipiscing</td>
-								<td>elit</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				 -->
+				
+				<div ng-view></div>
+				
 			</div>
 		</div>
 	</div>
@@ -72,18 +39,34 @@
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="jquery.min.js" th:src="@{/resources/common/jquery-1.7.1.js}"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="http://cdn.bootcss.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="http://localhost:8080/bootstrap/js/bootstrap.min.js"></script>
+	
+	<script src="http://localhost:8080/angular/angular.js"></script>
+	<script src="http://localhost:8080/angular/angular-route.js"></script>
+	<script src="app.js" th:src="@{/resources/js/app.js}"></script>
+	<script src="controllers.js" th:src="@{/resources/js/controllers.js}"></script>
 </body>
 <script type="text/javascript">
 	jQuery(function($){
 		$("li","#_sidebar").click(function(){
 			$("li","#_sidebar").removeClass("active");
 			$(this).addClass("active");
-			
-			//加载正文
-			var url = $("a", this).attr("data-url");
-			$("#biz_container").load(url);
 		});
 	});
+</script>
+
+<script type="text/ng-template" id="phone-detail-tmp.html">
+	TBD(script-tmp):detail view for <span>{{phoneId}}</span>
+......................................
+</script>
+<script type="text/ng-template" id="printtmp.html">
+<div class="form-group">
+<div class="input-group">
+<div class="input-group-addon">选择快递公司: </div>
+<select id="expcomp" name="expcomp" class="form-control">
+  	<option ng-repeat="expcomp in expcomps" value="{{expcomp.compId}}">{{expcomp.compName}}</option>
+</select>
+</div>
+</div>
 </script>
 </html>

@@ -1,12 +1,20 @@
 package com.sky.web.config;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.thymeleaf.spring3.SpringTemplateEngine;
 import org.thymeleaf.spring3.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
@@ -37,7 +45,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter{
 		ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver();
 		templateResolver.setPrefix("/WEB-INF/views/");
 		templateResolver.setSuffix(".html");
-		templateResolver.setTemplateMode("HTML5");
+		templateResolver.setTemplateMode("LEGACYHTML5");
 		templateResolver.setCharacterEncoding("UTF-8");
 		
 		templateResolver.setCacheable(false);
@@ -49,5 +57,22 @@ public class WebAppConfig extends WebMvcConfigurerAdapter{
 		templateEngine.setTemplateResolver(templateResolver());
 		return templateEngine;
 	}
+	/*
+	@Bean
+	RequestMappingHandlerMapping requestMappingHandler() {
+		return new RequestMappingHandlerMapping();
+	}
 	
+	@Bean
+	RequestMappingHandlerAdapter requestMappingAdapter() {
+		RequestMappingHandlerAdapter adapter = new RequestMappingHandlerAdapter();
+		
+		List<HttpMessageConverter<?>> converters = new ArrayList<HttpMessageConverter<?>>();
+		converters.add(new MappingJackson2HttpMessageConverter());
+		
+		adapter.setMessageConverters(converters);
+		
+		return adapter;
+	}
+	*/
 }

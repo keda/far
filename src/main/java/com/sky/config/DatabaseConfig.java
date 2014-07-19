@@ -10,9 +10,12 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -23,6 +26,7 @@ import com.sky.core.AppMessage;
 
 @Configuration
 @EnableTransactionManagement
+@PropertySource("classpath:jdbc.properties")
 public class DatabaseConfig implements TransactionManagementConfigurer{
 	
 	Logger LOG = LoggerFactory.getLogger(DatabaseConfig.class);
@@ -33,32 +37,21 @@ public class DatabaseConfig implements TransactionManagementConfigurer{
 	@Autowired
 	private AppMessage messageSource;
 	
+	@Value("${username}") String username;
+	@Value("${password}") String password;
+	@Value("${url}") String url;
+	@Value("${driverClassName}") String driverClassName;
+	
 	@Bean
 	public DataSource dataSource() {
 		BasicDataSource dataSource = new BasicDataSource();
 		
-		Properties jdbc = jdbcProperties();
-		
-		dataSource.setUsername(jdbc.getProperty("username"));
-		dataSource.setPassword(jdbc.getProperty("password"));
-		dataSource.setUrl(jdbc.getProperty("url"));
-		dataSource.setDriverClassName(jdbc.getProperty("driverClassName"));
+		dataSource.setUsername(username);
+		dataSource.setPassword(password);
+		dataSource.setUrl(url);
+		dataSource.setDriverClassName(driverClassName);
 		
 		return dataSource;
-	}
-	
-	private Properties jdbcProperties() {
-		Resource jdbc = appCtx.getResource("classpath:jdbc.properties");
-		
-		Properties prop = new Properties();
-		try {
-			prop.load(jdbc.getInputStream());
-		} catch (IOException e) {
-			LOG.error(messageSource.getMessage("jdbc.error", new String[]{"jdbc.properties"}));
-			throw new RuntimeException(e);
-		}
-		
-		return prop;
 	}
 	
 	@Bean
